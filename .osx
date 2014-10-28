@@ -47,7 +47,7 @@ defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.5
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 # Always show scrollbars
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
 # Possible values: `WhenScrolling`, `Automatic` and `Always`
 
 # Disable smooth scrolling
@@ -88,7 +88,7 @@ defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
 # Disable the crash reporter
-#defaults write com.apple.CrashReporter DialogType -string "none"
+defaults write com.apple.CrashReporter DialogType -string "none"
 
 # Set Help Viewer windows to non-floating mode
 defaults write com.apple.helpviewer DevMode -bool true
@@ -133,19 +133,6 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # Disable local Time Machine snapshots
 sudo tmutil disablelocal
 
-# Disable hibernation (speeds up entering sleep mode)
-sudo pmset -a hibernatemode 0
-
-# Remove the sleep image file to save disk space
-sudo rm /Private/var/vm/sleepimage
-# Create a zero-byte file instead…
-sudo touch /Private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
-sudo chflags uchg /Private/var/vm/sleepimage
-
-# Disable the sudden motion sensor as it’s not useful for SSDs
-sudo pmset -a sms 0
-
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
@@ -177,28 +164,25 @@ defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 # Follow the keyboard focus while zoomed in
 defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-# Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+defaults write NSGlobalDomain AppleLanguages -array "en" "it"
 defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
 # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone "Europe/Brussels" > /dev/null
+sudo systemsetup -settimezone "Europe/Rome" > /dev/null
 
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 # Stop iTunes from responding to the keyboard media keys
-#launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 ###############################################################################
 # Screen                                                                      #
@@ -235,14 +219,14 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 
 # Set Desktop as the default location for new Finder windows
 # For other paths, use `PfLo` and `file:///full/path/here/`
-defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
 # Finder: show hidden files by default
 #defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -260,7 +244,7 @@ defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder QLEnableTextSelection -bool true
 
 # Display full POSIX path as Finder window title
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool false
 
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -354,7 +338,7 @@ defaults write com.apple.dock tilesize -int 36
 defaults write com.apple.dock mineffect -string "scale"
 
 # Minimize windows into their application’s icon
-defaults write com.apple.dock minimize-to-application -bool true
+defaults write com.apple.dock minimize-to-application -bool false
 
 # Enable spring loading for all Dock items
 defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
@@ -375,7 +359,7 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 
 # Don’t group windows by application in Mission Control
 # (i.e. use the old Exposé behavior instead)
-defaults write com.apple.dock expose-group-by-app -bool false
+defaults write com.apple.dock expose-group-by-app -bool true
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
@@ -430,7 +414,7 @@ defaults write com.apple.dock wvous-tl-modifier -int 0
 defaults write com.apple.dock wvous-tr-corner -int 4
 defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-corner -int 10
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
@@ -454,10 +438,10 @@ defaults write com.apple.Safari HomePage -string "about:blank"
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
 # Allow hitting the Backspace key to go to the previous page in history
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool false
 
 # Hide Safari’s bookmarks bar by default
-defaults write com.apple.Safari ShowFavoritesBar -bool false
+defaults write com.apple.Safari ShowFavoritesBar -bool true
 
 # Hide Safari’s sidebar in Top Sites
 defaults write com.apple.Safari ShowSidebarInTopSites -bool false
@@ -493,9 +477,6 @@ defaults write com.apple.mail DisableSendAnimations -bool true
 # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
-
 # Display emails in threaded mode, sorted by date (oldest at the top)
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
@@ -512,7 +493,7 @@ defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnab
 ###############################################################################
 
 # Hide Spotlight tray-icon (and subsequent helper)
-#sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 # Disable Spotlight indexing for any volume that gets mounted and has not yet
 # been indexed before.
 # Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
@@ -587,9 +568,6 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 # Show the main window when launching Activity Monitor
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
-# Visualize CPU usage in the Activity Monitor Dock icon
-defaults write com.apple.ActivityMonitor IconType -int 5
-
 # Show all processes in Activity Monitor
 defaults write com.apple.ActivityMonitor ShowCategory -int 0
 
@@ -659,48 +637,6 @@ defaults write com.google.Chrome.canary AppleEnableSwipeNavigateWithScrolls -boo
 defaults write com.google.Chrome DisablePrintPreview -bool true
 defaults write com.google.Chrome.canary DisablePrintPreview -bool true
 
-###############################################################################
-# GPGMail 2                                                                   #
-###############################################################################
-
-# Disable signing emails by default
-defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
-
-###############################################################################
-# SizeUp.app                                                                  #
-###############################################################################
-
-# Start SizeUp at login
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true
-
-# Don’t show the preferences window on next start
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
-
-###############################################################################
-# Sublime Text                                                                #
-###############################################################################
-
-# Install Sublime Text settings
-cp -r init/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
-
-###############################################################################
-# Transmission.app                                                            #
-###############################################################################
-
-# Use `~/Documents/Torrents` to store incomplete downloads
-defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
-
-# Don’t prompt for confirmation before downloading
-defaults write org.m0k.transmission DownloadAsk -bool false
-
-# Trash original torrent files
-defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# Hide the donate message
-defaults write org.m0k.transmission WarningDonate -bool false
-# Hide the legal disclaimer
-defaults write org.m0k.transmission WarningLegal -bool false
 
 ###############################################################################
 # Twitter.app                                                                 #
@@ -720,9 +656,6 @@ defaults write com.twitter.twitter-mac openLinksInBackground -bool true
 
 # Allow closing the ‘new tweet’ window by pressing `Esc`
 defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
-
-# Show full names rather than Twitter handles
-defaults write com.twitter.twitter-mac ShowFullNames -bool true
 
 # Hide the app in the background if it’s not the front-most window
 defaults write com.twitter.twitter-mac HideInBackground -bool true

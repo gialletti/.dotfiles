@@ -1,14 +1,108 @@
+# Project files
+__files/
+__files/*
+
+# SASS
+.sass-cache
+*.css.map
+
+# Composer
+composer.phar
+vendor/
+composer.lock
+
 # Compiled Python files
 *.pyc
 
-# Folder view configuration files
+# OSX
 .DS_Store
 Desktop.ini
-
-# Thumbnail cache files
 ._*
 Thumbs.db
-
-# Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+.AppleDouble
+.LSOverride
+Icon
+*~
+ehthumbs.db
+.DS_Store?
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+sftp-config.json
+
+# Packs
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+*.cab
+*.iso
+*.tar
+*.dmg
+
+# SVN
+.svn/
+
+# WordPress
+sitemap.xml
+sitemap.xml.gz
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+
+# CodeIgniter
+*/config/development
+*/logs/log-*.php
+*/logs/!index.html
+*/cache/*
+*/cache/!index.html
+*/cache/!.htaccess
+
+# Expression
+system/expressionengine/config/database.php
+system/expressionengine/config/config.php
+sized/
+thumbs/
+_thumbs/
+*/expressionengine/cache/*
+
+# Node
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+
+# Logs and databases #
+*.log
+*.sql
+*.sqlite
+
