@@ -244,7 +244,7 @@ function tre() {
 
 #   showa: to remind yourself of an alias (given some part of it)
 #   ------------------------------------------------------------
-function showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
+function showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/.aliases | grep -v '^\s*$' | less -FSRXc ; }
 
 #   extract:  Extract most know archives with one command
 #   ---------------------------------------------------------
