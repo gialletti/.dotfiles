@@ -1,15 +1,77 @@
-# Project files
-__files/
-__files/*
+# Project extra files and directories eg. '__files' or '__psds', etc.
+__*/
 
-# SASS
+# WordPress
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+sitemap.xml
+sitemap.xml.gz
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/uploads/
+
+
+# Sass
 .sass-cache
-*.css.map
 
 # Composer
 composer.phar
 vendor/
 composer.lock
+
+# SublimeText
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+sftp-config.json
+
+# CodeKit
+*/codekit-config.json
+*/config.codekit
+*.codekit
+.codekit-cache/
+*/.codekit-cache/
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Compiled Python files
 *.pyc
@@ -35,14 +97,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Sublime Text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
-sftp-config.json
-
 # Packs
 *.7z
 *.jar
@@ -60,19 +114,6 @@ sftp-config.json
 
 # SVN
 .svn/
-
-# WordPress
-sitemap.xml
-sitemap.xml.gz
-wp-config.php
-wp-content/advanced-cache.php
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/uploads/
-wp-content/wp-cache-config.php
 
 # CodeIgniter
 */config/development
@@ -101,7 +142,7 @@ coverage
 build/Release
 node_modules
 
-# Logs and databases #
+# Logs and databases
 *.log
 *.sql
 *.sqlite
