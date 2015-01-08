@@ -3,16 +3,16 @@
 
 install caskroom/cask/brew-cask
 tap caskroom/versions
-brew cask install codekit
-brew cask install iterm2
-brew cask install clipmenu
-brew cask install alfred
-brew cask install dropbox
-brew cask install cleanmymac
-brew cask install virtualbox
-brew cask install vagrant
-brew cask install vagrant-manager
-brew cask install mamp
-brew cask install transmit
-brew cask install skype
-brew cask install little-snitch
+cask install codekit
+cask install iterm2
+cask install clipmenu
+cask install alfred
+cask install dropbox
+cask install cleanmymac
+cask install virtualbox
+cask install vagrant
+cask install vagrant-manager
+cask install mamp
+cask install transmit
+cask install skype
+cask install little-snitch

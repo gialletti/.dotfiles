@@ -17,10 +17,9 @@ install bash-completion
 install vim --override-system-vi
 install homebrew/dupes/grep
 install homebrew/dupes/screen
-install homebrew/php/php55 --with-gmp
 
 # Install other useful binaries
-install brew-cask
+install caskroom/cask/brew-cask
 install node
 install p7zip
 install ruby
