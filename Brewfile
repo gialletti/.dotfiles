@@ -20,12 +20,11 @@ install homebrew/dupes/screen
 install homebrew/php/php55 --with-gmp
 
 # Install other useful binaries
-install git
 install brew-cask
 install node
 install p7zip
 install ruby
-insta zsh
+install zsh
 
 # Remove outdated versions from the cellar
 cleanup
