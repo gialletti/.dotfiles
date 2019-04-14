@@ -1,0 +1,10 @@
+# Add '~/.bin' to the '$PATH'
+export PATH="$HOME/.bin:$PATH";
+# Add local sbin to path
+export PATH="$PATH:/usr/local/sbin";
+# Add composer vendors to path
+export PATH="$PATH:$HOME/.composer/vendor/bin";
+# Add Android SDK to path
+export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools";
+export PATH="$PATH:$HOME/Library/Android/sdk/tools";
+export PATH="$PATH:$HOME/Library/Android/sdk/sdk";

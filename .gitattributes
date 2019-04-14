@@ -1,0 +1,9 @@
+* text=auto
+*.gif diff=image
+*.jpg diff=image
+*.png diff=image
+
+*.htm diff=html
+*.html diff=html
+*.m diff=objc
+*.rb diff=ruby
