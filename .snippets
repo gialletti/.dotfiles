@@ -1,0 +1,11 @@
+# Display information about installed formulas, including size and dependencies
+
+function brew-info() {
+  brew leaves | while read pkg; do
+    echo -n -e "\033[1m$pkg\033[0m ";
+    echo -n -e "\033[3m(`brew info $pkg | grep -oE '[0-9]* files, ([0-9.]*[A-z]+)' | head -n 1 | awk '{print $3}'`)\033[0m ";
+    echo -n "-- deps: ["
+    brew deps --installed $pkg | awk '{printf(" %s ", $0)}';
+    echo "]";
+  done
+}

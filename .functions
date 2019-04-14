@@ -1,3 +1,37 @@
+# Clone permissions
+function cpmod() {
+  local from=$1
+  shift
+  local to=$*
+  for file in $from $to; do
+    [ -e $file ] || { echo "$file does not exist!"; }
+  done
+
+  chmod $( stat -f '%p' $from ) $to
+}
+
+# Check python package dependencies before installing
+function peep(){
+  local pkg=$1
+  pip download $pkg -d /tmp/peep/ --no-binary :all: | grep Collecting | cut -d' ' -f2 | grep -v $pkg;
+  rm -rf /tmp/peep
+}
+
+# Start Python virtualenv
+function venv() {
+  local proj=$1
+  local env="$(pwd)/bin/activate";
+  command -v virtualenv >/dev/null 2>&1 || { echo "You must first install virtualenv. Run 'pip install virtualenv' to install globally."; return; }
+  if [ ! -z "$1"  ]; then
+    virtualenv $1 >/dev/null 2>&1;
+    cd "$1" && source "$env" >/dev/null 2>&1 && echo "New ${proj} enviroment succesfully created and set as working directory.";
+  elif [ -e "$env" ]; then
+    source "$env" >/dev/null 2>&1 && echo "Switched to '$(basename $(pwd))' environment!";
+  else
+    echo "No virtual environment set. Verify or create one passing the name as function argument, eg. 'venv anything'";
+  fi
+}
+
 # Simple calculator
 function calc() {
   local result="";
@@ -37,8 +71,13 @@ function mkd() {
 }
 
 # Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
+function cdf() {
   cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+}
+
+# Open Finder to working directory. Basically the opposite of cdf
+function fdc() {
+  open -a Finder .
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
@@ -110,7 +149,7 @@ function gitio() {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
-function server() {
+function webserver() {
   local port="${1:-8000}";
   sleep 1 && open "http://localhost:${port}/" &
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";

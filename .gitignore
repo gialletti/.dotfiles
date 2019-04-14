@@ -1,44 +1,9 @@
-# Project extra files and directories eg. '__files' or '__psds', etc.
-__*/
-
-# WordPress
-wp-content/blogs.dir/
-wp-content/upgrade/
-wp-content/backup-db/
-wp-content/advanced-cache.php
-wp-content/wp-cache-config.php
-sitemap.xml
-sitemap.xml.gz
-wp-config.php
-wp-content/advanced-cache.php
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/uploads/
-
-
 # Sass
 .sass-cache
 
-# Composer
-composer.phar
-vendor/
-composer.lock
-
 # SublimeText
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-sftp-config.json
-
-# CodeKit
-*/codekit-config.json
-*/config.codekit
-*.codekit
-.codekit-cache/
-*/.codekit-cache/
 
 # Compiled source
 *.com
@@ -63,87 +28,15 @@ sftp-config.json
 *.sql
 *.sqlite
 
-# OS generated files
-*~
+# OS files
 .DS_Store
-.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
 Thumbs.db
-
-# Compiled Python files
-*.pyc
-
-# OSX
-.DS_Store
-Desktop.ini
-._*
-Thumbs.db
-.Spotlight-V100
-.Trashes
-.AppleDouble
-.LSOverride
-Icon
-*~
-ehthumbs.db
-.DS_Store?
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# Packs
-*.7z
-*.jar
-*.rar
-*.zip
-*.gz
-*.bzip
-*.bz2
-*.xz
-*.lzma
-*.cab
-*.iso
-*.tar
-*.dmg
 
 # SVN
 .svn/
 
-# CodeIgniter
-*/config/development
-*/logs/log-*.php
-*/logs/!index.html
-*/cache/*
-*/cache/!index.html
-*/cache/!.htaccess
-
-# Expression
-system/expressionengine/config/database.php
-system/expressionengine/config/config.php
-sized/
-thumbs/
-_thumbs/
-*/expressionengine/cache/*
-
 # Node
-pids
-*.pid
-*.seed
-lib-cov
-coverage
-.grunt
-.lock-wscript
-build/Release
 node_modules
-
-# Logs and databases
-*.log
-*.sql
-*.sqlite
-

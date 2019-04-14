@@ -15,6 +15,9 @@
 	# Pull in remote changes for the current repository and all its submodules
 	p = !"git pull; git submodule foreach git pull origin master"
 
+  	# Update all submodules for current repository
+  	su = submodule update --recursive --init
+
 	# Clone a repository including all submodules
 	c = clone --recursive
 
@@ -54,6 +57,10 @@
 	# a.k.a. ‘delete merged’
 	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
+        # Completely remove submodule
+        rmsb = "!f() { if git submodule status \"$1\" >/dev/null 2>&1; then git submodule deinit -f \"$1\" && rmdir \"$1\" && rm -rf .git/modules/\"$1\" && \
+        git config --file=.gitmodules --remove-section submodule.\"$1\" && git add .gitmodules && git rm --cached -rf \"$1\"; else echo \"Submodule '$1' not found.\"; fi }; f"
+
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
@@ -68,6 +75,8 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi \
 	}; f"
+	alias = config --get-regexp ^alias\\.
+	urls = config --get-regexp ^url\\.
 
 [apply]
 
@@ -135,7 +144,8 @@
 	# Use the Git 1.x.x default to avoid errors on machines with old Git
 	# installations. To use `simple` instead, add this to your `~/.extra` file:
 	# `git config --global push.default simple`. See http://git.io/mMah-w.
-	default = matching
+	default = current
+	followTags = true
 
 # URL shorthands
 
@@ -158,6 +168,17 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
 [user]
-	email = gialletti@gmx.com
 	name = Giammarco Galletti
+	email = gialletti@gmx.com
+	signingkey = 3F9755A7A25B5C00
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
