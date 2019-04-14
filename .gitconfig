@@ -158,3 +158,6 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+[user]
+	email = gialletti@gmx.com
+	name = Giammarco Galletti
