@@ -1,4 +1,8 @@
-# dot files
+# Configuration files
+
+### Start
+
+Clone repository to `$HOME/.config` and execute `$HOME/.config/boostrap.sh`
 
 ### Install Homebrew formulae
 

@@ -4,6 +4,9 @@ l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
 # View the current working tree status using the short format
 s = status -s
+# View abbreviated SHA, description, and history graph of the latest 20 commits
+l = log --pretty=oneline -n 20 --graph --abbrev-commit
+plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
 
 # Show the diff between the latest commit and the current state
 d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
@@ -68,22 +71,33 @@ contributors = shortlog --summary --numbered
 alias = config --get-regexp ^alias\\.
 urls = config --get-regexp ^url\\.
 
+# Ignore files
+ignore = update-index --assume-unchanged
+unignore = update-index --no-assume-unchanged
+ignored = !git ls-files -v | grep ^[a-z]
+
+# Skip files
+skip = update-index --skip-worktree
+unskip = update-index --no-skip-worktree
+skipped = !git ls-files -v | grep --color "^S"
 [apply]
 # Detect whitespace errors when applying a patch
 whitespace = fix
 
 [core]
-# Use custom `.gitignore` and `.gitattributes`
-excludesfile = ~/.gitignore
-attributesfile = ~/.gitattributes
+# Use custom globals `.gitignore` and `.gitattributes`
+excludesfile = $HOME/.global.gitignore
+attributesfile = $HOME/.global.gitattributes
 
 # Treat spaces before tabs and all kinds of trailing whitespace as an error
 # [default] trailing-space: looks for spaces at the end of a line
 # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
 
 # Make `git rebase` safer on OS X
+# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 trustctime = false
+autocrlf = input
 
 [color]
 # Use colors in Git commands that are capable of colored output when
@@ -150,5 +164,9 @@ process = git-lfs filter-process
 [gpg]
 program = gpg
 
-[include]
-path = "$HOME"/.gitconfig_user
+[branch]
+autoSetupMerge = always
+autoSetupRebase = always
+
+[pull]
+default = current

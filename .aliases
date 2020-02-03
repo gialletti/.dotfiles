@@ -5,16 +5,6 @@ alias ..="cd .."
 alias ~="cd ~"
 alias -- -="cd -"
 
-# GIT
-if [ -x "$(command -v git-number)" ]; then
-  alias gn="git number --column"
-  alias gs="git number -s"
-  alias ga="git number add"
-  alias gd="git number diff"
-  alias gr="git number reset"
-  alias gco="git number checkout"
-fi
-
 # Colorful lists
 colorflag=$([ ls --color ] >/dev/null 2>&1 && echo "--color" || echo "-G")
 alias ls="command ls ${colorflag}"

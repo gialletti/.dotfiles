@@ -12,10 +12,15 @@ install vim --override-system-vi
 install homebrew/dupes/grep
 install homebrew/dupes/screen
 
-# Install other useful binaries
 install node
 install p7zip
 install ruby
+install yarn
+
+install nvm
+install jenv
+install rbenv
+install pyenv
 
 # Remove outdated versions from the cellar
 cleanup
