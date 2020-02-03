@@ -1,18 +1,11 @@
-# Install native apps
+# Install Casks
 # Usage: `brew bundle Caskfile`
 
-install caskroom/cask/brew-cask
 tap caskroom/versions
-cask install codekit
 cask install iterm2
-cask install clipmenu
+cask install clipy
 cask install alfred
 cask install dropbox
 cask install cleanmymac
 cask install virtualbox
-cask install vagrant
-cask install vagrant-manager
-cask install mamp
 cask install transmit
-cask install skype
-cask install little-snitch

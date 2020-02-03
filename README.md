@@ -1,17 +1,17 @@
-# dots
+# dot files
 
 ### Install Homebrew formulae
 
-When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):
+When setting up a new Mac, you may want to install some common [Homebrew](https://github.com/Homebrew/brew) formulas after installing Homebrew:
 
 ```bash
-brew bundle ~/Brewfile
+brew bundle ./Brewfile
 ```
 
 ### Install apps with `brew cask`
 
-You could also install native apps with [`brew cask`](https://github.com/phinze/homebrew-cask):
+You could also install some apps with [`Homebrew Casks`](https://github.com/Homebrew/homebrew-cask):
 
 ```bash
-brew bundle ~/Caskfile
+brew bundle ./Caskfile
 ```

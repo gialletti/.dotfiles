@@ -2,6 +2,7 @@
 *.gif diff=image
 *.jpg diff=image
 *.png diff=image
+*.svg diff=image
 
 *.htm diff=html
 *.html diff=html

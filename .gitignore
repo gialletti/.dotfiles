@@ -1,18 +1,6 @@
 # Sass
 .sass-cache
 
-# SublimeText
-*.sublime-workspace
-*.sublime-project
-
-# Compiled source
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
 # Packages
 *.7z
 *.dmg
@@ -22,6 +10,7 @@
 *.rar
 *.tar
 *.zip
+*.msi
 
 # Logs and databases
 *.log
@@ -30,13 +19,20 @@
 
 # OS files
 .DS_Store
+.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+ehthumbs.db
 Thumbs.db
-
-# SVN
-.svn/
+desktop.ini
 
 # Node
 node_modules
+
+# IDEs
+.vscode
+.idea
+*.iml
+*.sublime-workspace
+*.sublime-project
