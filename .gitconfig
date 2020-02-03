@@ -149,3 +149,6 @@ process = git-lfs filter-process
 
 [gpg]
 program = gpg
+
+[include]
+path = "$HOME"/.gitconfig_user
