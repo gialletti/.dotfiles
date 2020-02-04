@@ -2,32 +2,32 @@
 
 # Add Gulp completion
 if [ -x "$(command -v gulp)" ]; then
-    eval "$(gulp --completion=bash)"
+  eval "$(gulp --completion=bash)"
 fi
 
 # PIP
 _pip() {
-    local cur prev commands opts
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD - 1]}"
-    first="${COMP_WORDS[0]}"
+  local cur prev commands opts
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD - 1]}"
+  first="${COMP_WORDS[0]}"
 
-    commands=$($first --help | awk '/Commands\:/,/General Options\:/' |
-        \grep -E -o "^\s{2}\w+" | tr -d ' ')
-    opts=$($first --help | \grep -E -o "((-\w{1}|--(\w|-)*=?)){1,2}")
+  commands=$($first --help | awk '/Commands\:/,/General Options\:/' |
+    \grep -E -o "^\s{2}\w+" | tr -d ' ')
+  opts=$($first --help | \grep -E -o "((-\w{1}|--(\w|-)*=?)){1,2}")
 
-    if [ $COMP_CWORD == 1 ]; then
-        COMPREPLY=($(compgen -W "${commands}" -- ${cur}))
-        return 0
-    fi
+  if [ $COMP_CWORD == 1 ]; then
+    COMPREPLY=($(compgen -W "${commands}" -- ${cur}))
+    return 0
+  fi
 
-    if [[ ${cur} == -* ]]; then
-        local command_opts
-        command_opts=$($first $prev --help |
-            \grep -E -o "((-\w{1}|--(\w|-)*=?)){1,2}")
-        COMPREPLY=($(compgen -W "${command_opts}" -- ${cur}))
-        return 0
-    fi
+  if [[ ${cur} == -* ]]; then
+    local command_opts
+    command_opts=$($first $prev --help |
+      \grep -E -o "((-\w{1}|--(\w|-)*=?)){1,2}")
+    COMPREPLY=($(compgen -W "${command_opts}" -- ${cur}))
+    return 0
+  fi
 }
 complete -o default -F _pip pip
 complete -o default -F _pip pip2
@@ -35,13 +35,13 @@ complete -o default -F _pip pip3
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 _ssh_hosts() {
-    COMPREPLY=""
-    if [ -r "$HOME/.ssh/config" ]; then
-        COMPREPLY+=($(grep "^Host" $HOME/.ssh/config | grep -v "[?*]" | cut -d " " -f2 | tr ' ' '\n'))
-    fi
-    if [ -r "$HOME/.ssh/known_hosts" ]; then
-        COMPREPLY+=($(grep -E -o "(([0-9]{1,3}\.){3}[0-9]{1,3})" $HOME/.ssh/known_hosts))
-        COMPREPLY+=($(grep -E -o "((?:[a-zA-Z0-9_-]+\.)*[a-zA-Z0-9][a-zA-Z0-9_-]+\.[a-zA-Z]+)" $HOME/.ssh/known_hosts))
-    fi
+  COMPREPLY=""
+  if [ -r "$HOME/.ssh/config" ]; then
+    COMPREPLY+=($(grep "^Host" $HOME/.ssh/config | grep -v "[?*]" | cut -d " " -f2 | tr ' ' '\n'))
+  fi
+  if [ -r "$HOME/.ssh/known_hosts" ]; then
+    COMPREPLY+=($(grep -E -o "(([0-9]{1,3}\.){3}[0-9]{1,3})" $HOME/.ssh/known_hosts))
+    COMPREPLY+=($(grep -E -o "((?:[a-zA-Z0-9_-]+\.)*[a-zA-Z0-9][a-zA-Z0-9_-]+\.[a-zA-Z]+)" $HOME/.ssh/known_hosts))
+  fi
 }
 complete -o "default" -o "nospace" -F _ssh_hosts scp sftp ssh

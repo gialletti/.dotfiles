@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# Add '~/.bin' to path
-export PATH="$HOME/.bin:$PATH"
+# Add user `.bin` and dotfiles `bin` to path
+export PATH="$HOME/.bin:$USER_DOTFILES_DIR/bin:$PATH"
 
-# Add local sbin to path
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# Add user local `bin` to path if needed
+if [[ ":$PATH:" != *"/usr/local/bin"* ]]; then
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi

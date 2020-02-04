@@ -6,14 +6,17 @@ cd "$(dirname "${BASH_SOURCE}")"
 git pull origin master
 
 function overrideLinks() {
-    find -E $PWD \
-        -iregex '.*(aliases|bash.*|bin|editorconfig|exports|extra|functions|global.*|hushlogin|path|rc$|vim)' \
-        -not -path "*/.vim/*" -not -path "*/.git/*" -not -name ".git" -not -name ".gitmodules" \
-        -exec ln -sfn "{}" $HOME ";"
+  # Create needed directories if necessary
+  mkdir -p $HOME/{.gnupg}
+
+  # Find and create links in home to user files
+  find -E $PWD \
+    -iregex '.*/.(bash.*|editorconfig|hushlogin|[^.]+rc$|vim)' \
+    -exec ln -sfn "{}" $HOME ";"
 }
 
 function userConfig() {
-    echo '
+  echo '
     #!/usr/bin/env bash
 
     # User configuration
@@ -30,24 +33,22 @@ function userConfig() {
     git config --global user.signingkey "$GIT_SIGN_KEYID"
     ' >|$HOME/.user
 
-    echo '
+  echo '
     [include]
     path = $HOME/.config/.global.gitconfig
-    ' >|$HOME/.gitconfig
+    ' >>$HOME/.gitconfig
 
-    echo '' >|$HOME/.npmrc
-
-    source ~/.bash_profile
+  source ~/.bash_profile
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
-    overrideLinks && userConfig
+  overrideLinks && userConfig
 else
-    read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        overrideLinks && userConfig
-    fi
+  read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
+  echo ""
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    overrideLinks && userConfig
+  fi
 fi
 
 unset overrideLinks

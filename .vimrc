@@ -12,10 +12,10 @@ set encoding=utf-8 nobomb
 let mapleader=","
 set binary
 set noeol
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
+set backupdir=$HOME/.vim/backups
+set directory=$HOME/.vim/swaps
 if exists("&undodir")
-	set undodir=~/.vim/undo
+	set undodir=$HOME/.vim/undo
 endif
 set backupskip=/tmp/*,/private/tmp/*
 set modeline

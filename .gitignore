@@ -1,0 +1,6 @@
+*/
+!bin/
+!.vim
+!init/
+.npmrc
+.user
