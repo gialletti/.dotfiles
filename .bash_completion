@@ -45,3 +45,26 @@ _ssh_hosts() {
   fi
 }
 complete -o "default" -o "nospace" -F _ssh_hosts scp sftp ssh
+
+# Add Git-Number alias and completion
+if [ -x "$(command -v git-number)" ]; then
+  # Set aliases
+  alias gs="git-number"
+  alias ga="gs add"
+  alias gc="gs -c git commit"
+  alias gd="gs -c git diff"
+  alias gr="gs -c git reset"
+  alias gl="gs -c git log -w -b -p --ignore-blank-lines"
+  alias gco="gs -c git checkout"
+
+  # Completion for aliases
+  if type _git &>/dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+    __git_complete gs _git
+    __git_complete ga _git_add
+    __git_complete gc _git_commit
+    __git_complete gd _git_diff
+    __git_complete gr _git_reset
+    __git_complete gl _git_log
+    __git_complete gco _git_checkout
+  fi
+fi

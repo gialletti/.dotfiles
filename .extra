@@ -31,19 +31,3 @@ if [ -x "$(command -v pyenv)" ]; then
   export PATH="$HOME/.jenv/bin:$PATH"
   eval "$(pyenv init -)"
 fi
-
-# Git Number
-if [ -x "$(command -v git-number)" ]; then
-  # Set aliases
-  alias gn="git-number --column"
-  alias ga="git-number add"
-  alias gc="git-number commit"
-  alias gd="git-number diff"
-  alias gr="git-number reset"
-  alias gco="git-number checkout"
-
-  # Completion for aliases
-  if type _git &>/dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-    complete -o default -o nospace -F _git git-number
-  fi
-fi
