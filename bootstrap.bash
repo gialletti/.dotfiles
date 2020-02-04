@@ -35,7 +35,7 @@ function userConfig() {
 
   echo '
     [include]
-    path = $HOME/.config/.global.gitconfig
+    path = .config/.global.gitconfig
     ' >>$HOME/.gitconfig
 
   source ~/.bash_profile
