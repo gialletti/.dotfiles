@@ -8,15 +8,17 @@ update
 upgrade
 
 install bash-completion
+unlink bash-completion
+install bash-completion@2
 install vim --override-system-vi
-install homebrew/dupes/grep
-install homebrew/dupes/screen
 
+install gnupg
+install pinentry-mac
+install git
 install node
 install p7zip
 install ruby
 install yarn
-
 install nvm
 install jenv
 install rbenv

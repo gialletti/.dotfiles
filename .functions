@@ -61,7 +61,7 @@ function trash() {
 }
 
 # Include file if exists
-include() {
+function include() {
   [[ -f "$1" ]] && source "$1"
 }
 
@@ -95,7 +95,7 @@ function fs() {
 }
 
 # Create a data URL from a file
-function toDataURI() {
+function to_data_uri() {
   local mimeType=$(file -b --mime-type "$1")
   if [[ $mimeType == text/* ]]; then
     mimeType="${mimeType};charset=utf-8"
@@ -113,14 +113,14 @@ function gitio() {
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
-function webserver() {
+function web_serve() {
   local port="${1:-8000}"
   sleep 1 && open "http://localhost:${port}/" &
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
 # Compare original and gzipped file size
-function gzize() {
+function gz_compare() {
   local origsize=$(wc -c <"$1")
   local gzipsize=$(gzip -c "$1" | wc -c)
   local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
@@ -129,7 +129,7 @@ function gzize() {
 }
 
 # Syntax-highlight JSON strings or files
-function json() {
+function json_syntax() {
   if [ -t 0 ]; then # argument
     python -mjson.tool <<<"$*" | pygmentize -l javascript
   else # pipe
@@ -200,30 +200,22 @@ function extract() {
 }
 
 # Find file under the current directory
-function ff() { /usr/bin/find . -name "$@"; }
-
-# Find file whose name starts with a given string
-function ffs() { /usr/bin/find . -name "$@"'*'; }
-
-# Find file whose name ends with a given string
-function ffe() { /usr/bin/find . -name '*'"$@"; }
+function ff() { find . -name "$@"; }
 
 # Display useful host related informaton
 function ii() {
-  echo -e "\nYou are logged on ${RED}$HOST"
-  echo -e "\nAdditionnal information:$NC "
+  echo -e "\nYou are logged on $(hostname)"
+  echo -e "\nAdditionnal information:"
   uname -a
-  echo -e "\n${RED}Users logged on:$NC "
+  echo -e "\nUsers logged on:"
   w -h
-  echo -e "\n${RED}Current date :$NC "
+  echo -e "\nCurrent date:"
   date
-  echo -e "\n${RED}Machine stats :$NC "
+  echo -e "\nMachine stats:"
   uptime
-  echo -e "\n${RED}Current network location :$NC "
-  scselect
-  echo -e "\n${RED}Public facing IP Address :$NC "
-  myip
-  #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
+  echo -e "\nNetwork info:"
+  echo -e "$(public_ip) (public)"
+  echo -e "$(local_ip) (local)"
   echo
 }
 

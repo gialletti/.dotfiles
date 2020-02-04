@@ -4,7 +4,7 @@
 export USER_DOTFILES_DIR=$HOME/.config
 
 # Load the shell dotfiles, and then some.
-for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extra,user}; do
+for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extra,profile,user}; do
   [ -f "$file" ] && [ -r "$file" ] && source "$file"
 done
 unset file

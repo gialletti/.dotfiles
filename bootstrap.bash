@@ -3,9 +3,16 @@
 # Change working directory to script's dirname
 cd "$(dirname "${BASH_SOURCE}")"
 
-git pull origin master
+# Update
+{
+  git submodule update --init --recursive &&
+    git stash --include-untracked &&
+    git pull origin master --recurse-submodules &&
+    git stash pop
+} &>/dev/null
 
-function overrideLinks() {
+# Link configuration files to $HOME
+function _link_files() {
   # Create needed directories if necessary
   mkdir -p $HOME/{.gnupg}
 
@@ -15,8 +22,11 @@ function overrideLinks() {
     -exec ln -sfn "{}" $HOME ";"
 }
 
-function userConfig() {
-  echo '
+function _setup_config() {
+  source ~/.bash_profile
+
+  if [ ! -f $HOME/.user ]; then
+    echo '
     #!/usr/bin/env bash
 
     # User configuration
@@ -32,24 +42,29 @@ function userConfig() {
     git config --global commit.gpgsign true
     git config --global user.signingkey "$GIT_SIGN_KEYID"
     ' >|$HOME/.user
+  fi
 
-  echo '
+  if [ ! -f $HOME/.gitconfig ]; then
+    echo "
     [include]
-    path = .config/.global.gitconfig
-    ' >>$HOME/.gitconfig
+    path = $USER_DOTFILES_DIR/.global.gitconfig
+    " >>$HOME/.gitconfig
+  fi
 
-  source ~/.bash_profile
+  if [ ! -f $HOME/.npmrc ]; then
+    echo "" >|$HOME/.npmrc
+  fi
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
-  overrideLinks && userConfig
+  _link_files && _setup_config
 else
   read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
   echo ""
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    overrideLinks && userConfig
+    _link_files && _setup_config
   fi
 fi
 
-unset overrideLinks
-unset userConfig
+unset _link_files
+unset _setup_config

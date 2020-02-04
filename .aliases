@@ -20,11 +20,11 @@ alias ld="ls -lF ${colorflag} | grep --color=never '^d'"
 alias map="xargs -n1"
 
 # Network
-alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
-alias netinfo="ipconfig getpacket en0"
-alias openports='sudo lsof -i | grep LISTEN'
-alias flushdns="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias public_ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias local_ip="ipconfig getifaddr en0"
+alias net_info="ipconfig getpacket en0"
+alias open_ports='sudo lsof -i | grep LISTEN'
+alias flush_dns="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 # Utilities
 alias sudo='sudo '
