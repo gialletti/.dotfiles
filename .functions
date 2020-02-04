@@ -175,7 +175,7 @@ function tre() {
 }
 
 # Search for aliases
-function aliases() { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc; }
+function aliases() { grep --color=always -i -a1 $@ $HOME/.aliases | grep -v '^\s*$' | less -FSRXc; }
 
 # Extract most know archives with one command
 function extract() {
