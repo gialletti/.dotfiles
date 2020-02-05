@@ -18,7 +18,8 @@ function _link_files() {
 
   # Find and create links in home to user files
   find -E $PWD \
-    -iregex '.*/.(bash.*|editorconfig|hushlogin|[^.]+rc$|vim)' \
+    -iregex '.*\/\.(bash.*|editorconfig|hushlogin|[^.\/]+rc$)' \
+    -or -path '*/.gnupg/*' -or -path '*/.ssh/*' -or -path '*/.vim' \
     -exec ln -sfn "{}" $HOME ";"
 }
 

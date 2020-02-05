@@ -1,6 +1,7 @@
 # ignore all folders except specific ones
 */
 !.gnupg
+!.ssh
 !.vim/
 !bin/
 !init/
