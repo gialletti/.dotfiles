@@ -1,9 +1,9 @@
 # ignore all folders except specific ones
 */
 !.gnupg
+!.vim/
 !bin/
 !init/
-!vim/
 
 # ignore user specific configurations
 .npmrc
