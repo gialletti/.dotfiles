@@ -3,6 +3,7 @@
 !.gnupg
 !bin/
 !init/
+!vim/
 
 # ignore user specific configurations
 .npmrc

@@ -1,5 +1,9 @@
+let s:vim_files=$USER_DOTFILES_DIR.'/vim/'
+
+set nowritebackup
+set nobackup
+set noswapfile
 set background=dark
-colorscheme solarized
 set nocompatible
 set clipboard=unnamed
 set wildmenu
@@ -12,12 +16,6 @@ set encoding=utf-8 nobomb
 let mapleader=","
 set binary
 set noeol
-set backupdir=$HOME/.vim/backups
-set directory=$HOME/.vim/swaps
-if exists("&undodir")
-	set undodir=$HOME/.vim/undo
-endif
-set backupskip=/tmp/*,/private/tmp/*
 set modeline
 set modelines=4
 set exrc

@@ -7,18 +7,18 @@
 # filename = filename to open
 # lineno = line number
 
-local PWD=$1
-local FILE=$2
-local LINE=$3
+PWD=$1
+FILE=$2
+LINE=$3
 
-local HTTP_REGEX="https?://([a-z0-9A-Z]+(:[a-zA-Z0-9]+)?@)?[-a-z0-9A-Z\-]+(\.[-a-z0-9A-Z\-]+)*((:[0-9]+)?)(/[a-zA-Z0-9;:/\.\-_+%~?&amp;@=#\(\)]*)?"
+HTTP_REGEX="https?://([a-z0-9A-Z]+(:[a-zA-Z0-9]+)?@)?[-a-z0-9A-Z\-]+(\.[-a-z0-9A-Z\-]+)*((:[0-9]+)?)(/[a-zA-Z0-9;:/\.\-_+%~?&amp;@=#\(\)]*)?"
 
 # Open URLs with default app
 if [[ ${FILE} =~ HTTP_REGEX ]]; then
-    /usr/bin/open $FILE
+  /usr/bin/open $FILE
 else
-    # Define path to file, using it's absolute or relative path
-    [ -e "$FILE" ] || [[ -e "${PWD}/${FILE}" && FILE=${PWD}/${FILE} ]] || FILE=$(find . -path "*${FILE}")
-    # If line number available, open with default app in format `path:line` which most editors accept
-    open $FILE${LINE:+:${LINE}}
+  # Define path to file, using it's absolute or relative path
+  [ -e "$FILE" ] || [[ -e "${PWD}/${FILE}" && FILE=${PWD}/${FILE} ]] || FILE=$(find . -path "*${FILE}")
+  # If line number available, open with default app in format `path:line` which most editors accept
+  open $FILE${LINE:+:${LINE}}
 fi

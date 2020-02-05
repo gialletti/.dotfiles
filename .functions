@@ -229,3 +229,8 @@ function brew-info() {
     echo "]"
   done
 }
+
+# Display number of running processes
+function count_process() {
+  ps -c -U $(whoami) | grep -i $1 | wc -l | xargs -I count echo "> Found count processes for $1"
+}
