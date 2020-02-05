@@ -14,7 +14,7 @@ cd "$(dirname "${BASH_SOURCE}")"
 # Link configuration files to $HOME
 function _link_files() {
   # Create needed directories if necessary
-  mkdir -p $HOME/{.gnupg}
+  mkdir -p $HOME/{.gnupg,.ssh}
 
   # Find and create links in home to user files
   find -E $PWD \
@@ -26,29 +26,31 @@ function _setup_config() {
   source ~/.bash_profile
 
   if [ ! -f $HOME/.user ]; then
-    echo '
+    echo "
     #!/usr/bin/env bash
 
     # User configuration
 
     # Git configuration
-    GIT_AUTHOR_NAME=""
-    GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-    git config --global user.name "$GIT_AUTHOR_NAME"
-    GIT_AUTHOR_EMAIL=""
-    GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-    git config --global user.email "$GIT_AUTHOR_EMAIL"
-    GIT_SIGN_KEYID=""
+    GIT_AUTHOR_NAME=\"\"
+    GIT_COMMITTER_NAME=\"\$GIT_AUTHOR_NAME\"
+    git config --global user.name \"\$GIT_AUTHOR_NAME\"
+
+    GIT_AUTHOR_EMAIL=\"\"
+    GIT_COMMITTER_EMAIL=\"\$GIT_AUTHOR_EMAIL\"
+    git config --global user.email \"\$GIT_AUTHOR_EMAIL\"
+
+    GIT_SIGN_KEYID=\"\"
     git config --global commit.gpgsign true
-    git config --global user.signingkey "$GIT_SIGN_KEYID"
-    ' >|$HOME/.user
+    git config --global user.signingkey \"\$GIT_SIGN_KEYID\"
+    " >|$HOME/.user
   fi
 
   if [ ! -f $HOME/.gitconfig ]; then
     echo "
     [include]
     path = $USER_DOTFILES_DIR/.global.gitconfig
-    " >>$HOME/.gitconfig
+    " >|$HOME/.gitconfig
   fi
 
   if [ ! -f $HOME/.npmrc ]; then
