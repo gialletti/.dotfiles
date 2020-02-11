@@ -24,6 +24,8 @@
 	<string>manual</string>
 	<key>AutoHideTmuxClientSession</key>
 	<false/>
+	<key>BootstrapDaemon</key>
+	<false/>
 	<key>CheckTestRelease</key>
 	<false/>
 	<key>ClosingHotkeySwitchesSpaces</key>
@@ -736,7 +738,7 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>448 121 1016 512 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1680 483 0 0 1680 1027 </string>
+	<string>0 0 1270 505 0 0 1680 1027 </string>
 	<key>NeverWarnAboutMeta</key>
 	<true/>
 	<key>NeverWarnAboutOverrides</key>
@@ -1237,7 +1239,7 @@
 				<key>editor</key>
 				<string>com.github.atom</string>
 				<key>text</key>
-				<string>$USER_DOTFILES_DIR/bin/open_file \5 \1 \2</string>
+				<string>~/.config/bin/open_file \5 \1 \2</string>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -1493,11 +1495,11 @@
 	<key>NoSyncInstallationId</key>
 	<string>BFB92E73-59F5-4E04-A77A-CC12A37E39D7</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>1</integer>
+	<integer>3</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>602586460.01159298</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1886,6 +1888,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.window</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>id</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2082,6 +2092,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentSession.name</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>window</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2296,7 +2314,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>
