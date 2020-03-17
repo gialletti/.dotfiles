@@ -19,6 +19,23 @@ if [[ ${FILE} =~ HTTP_REGEX ]]; then
 else
   # Define path to file, using it's absolute or relative path
   [ -e "$FILE" ] || [[ -e "${PWD}/${FILE}" && FILE=${PWD}/${FILE} ]] || FILE=$(find . -path "*${FILE}")
-  # If line number available, open with default app in format `path:line` which most editors accept
-  open $FILE${LINE:+:${LINE}}
+  # Get file extension
+  EXTENSION=$(basename "$FILE" | cut -d'.' -f2-)
+  APPLICATION=$(duti -x "$EXTENSION" | sed -n 3p)
+
+  case $APPLICATION in
+
+  "com.jetbrains.intellij")
+    open -b $APPLICATION --args --line ${LINE:-0} $FILE
+    ;;
+
+  "com.microsoft.VSCode")
+    open -b $APPLICATION --args $FILE${LINE:+:${LINE}}
+    ;;
+
+  *)
+    open $FILE
+    ;;
+
+  esac
 fi

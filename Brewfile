@@ -12,6 +12,7 @@ unlink bash-completion
 install bash-completion@2
 install vim --override-system-vi
 
+install duti
 install gnupg
 install pinentry-mac
 install git
