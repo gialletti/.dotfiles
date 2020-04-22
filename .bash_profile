@@ -9,6 +9,12 @@ for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extr
 done
 unset file
 
+# Load custom user files
+for file in $HOME/.{profile,user}; do
+  [ -f "$file" ] && [ -r "$file" ] && source "$file"
+done
+unset file
+
 # Activate shell options
 for option in ignoreeof noclobber; do
   set -o "$option" 2>/dev/null
