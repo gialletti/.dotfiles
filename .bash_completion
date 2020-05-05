@@ -52,7 +52,7 @@ if [ -x "$(command -v git-number)" ]; then
   alias gs="git-number"
   alias ga="gs add"
   alias gc="gs -c git commit"
-  alias gd="gs -c git diff"
+  alias gd="gs -c git diff --ignore-space-at-eol --ignore-all-space --ignore-space-change --ignore-blank-lines"
   alias gr="gs -c git reset"
   alias gl="gs -c git log -w -b -p --ignore-blank-lines"
   alias gco="gs -c git checkout"
