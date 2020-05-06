@@ -2,6 +2,7 @@
 
 # Change working directory to script's dirname
 cd "$(dirname "${BASH_SOURCE}")"
+CWD="$(pwd -P)"
 
 # Update
 {
@@ -30,6 +31,9 @@ function _setup_config() {
     echo "
     #!/usr/bin/env bash
 
+    # Set your configuration files path
+    export USER_DOTFILES_DIR=$CWD
+
     # User configuration
 
     # Git configuration
@@ -50,7 +54,7 @@ function _setup_config() {
   if [ ! -f $HOME/.gitconfig ]; then
     echo "
     [include]
-    path = $USER_DOTFILES_DIR/.global.gitconfig
+    path = $CWD/.global.gitconfig
     " >|$HOME/.gitconfig
   fi
 
@@ -59,7 +63,7 @@ function _setup_config() {
   fi
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
+if [ "$1" == "--quiet" -o "$1" == "-q" ]; then
   _link_files && _setup_config
 else
   read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
@@ -71,3 +75,4 @@ fi
 
 unset _link_files
 unset _setup_config
+unset CWD

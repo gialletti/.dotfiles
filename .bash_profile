@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-# Set your configuration files path
-export USER_DOTFILES_DIR=$HOME/.config
-
-# Load the shell dotfiles, and then some.
-for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extra,profile,user}; do
+# Load custom user files
+for file in $HOME/.{user,profile}; do
   [ -f "$file" ] && [ -r "$file" ] && source "$file"
 done
 unset file
 
-# Load custom user files
-for file in $HOME/.{profile,user}; do
+# Load the shell dotfiles, and then some.
+for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extra,profile,user}; do
   [ -f "$file" ] && [ -r "$file" ] && source "$file"
 done
 unset file

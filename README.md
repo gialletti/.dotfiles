@@ -2,7 +2,7 @@
 
 ### Start
 
-Clone repository to your desired path (eg. `$HOME/.files`) and execute `boostrap.sh`
+Clone repository to your desired path (eg. `$HOME/.files` or `$HOME/.config`) and execute `boostrap.sh`
 
 ### Install Homebrew formulae
 

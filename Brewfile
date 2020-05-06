@@ -4,9 +4,6 @@
 # Make sure we’re using the latest Homebrew
 update
 
-# Upgrade any already-installed formulae
-upgrade
-
 install bash-completion
 unlink bash-completion
 install bash-completion@2
