@@ -1,26 +1,36 @@
-# Install formulas
-# Usage: `brew bundle Brewfile`
+brew "coreutils"
+brew "bash-completion"
+brew "bash-completion@2", conflicts_with: ["bash-completion"]
+brew "duti"
+brew "git-number"
+brew "git"
+brew "gnupg"
+brew "jenv"
+brew "jq"
+brew "node"
+brew "nvm"
+brew "openssl"
+brew "p7zip"
+brew "pinentry-mac"
+brew "pyenv"
+brew "rbenv"
+brew "ruby"
+brew "vim"
+brew "whalebrew"
+brew "yarn"
 
-# Make sure we’re using the latest Homebrew
-update
+tap "homebrew/cask"
+tap "adoptopenjdk/openjdk"
+cask_args appdir: "/Applications"
 
-install bash-completion
-unlink bash-completion
-install bash-completion@2
-install vim --override-system-vi
-
-install duti
-install gnupg
-install pinentry-mac
-install git
-install node
-install p7zip
-install ruby
-install yarn
-install nvm
-install jenv
-install rbenv
-install pyenv
-
-# Remove outdated versions from the cellar
-cleanup
+cask "adoptopenjdk11"
+cask "adoptopenjdk8"
+cask "alfred"
+cask "cheatsheet"
+cask "docker"
+cask "dropbox"
+cask "google-chrome"
+cask "keepingyouawake"
+cask "maccy"
+cask "postman"
+cask "visual-studio-code"

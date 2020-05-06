@@ -5,15 +5,19 @@ cd "$(dirname "${BASH_SOURCE}")"
 CWD="$(pwd -P)"
 
 # Update
+echo -e "Updating files to latest version available...\n"
+
 {
   git submodule update --init --recursive &&
     git stash --include-untracked &&
-    git pull origin master --recurse-submodules &&
+    git pull origin HEAD --recurse-submodules &&
     git stash pop
 } &>/dev/null
 
 # Link configuration files to $HOME
 function _link_files() {
+  echo -e "Creating config dirs in HOME and linking files...\n"
+
   # Create needed directories if necessary
   mkdir -p $HOME/{.gnupg,.ssh}
 
@@ -25,6 +29,8 @@ function _link_files() {
 }
 
 function _setup_config() {
+  echo -e "Creating user configuration files at HOME...\n"
+
   source ~/.bash_profile
 
   if [ ! -f $HOME/.user ]; then
@@ -63,16 +69,29 @@ function _setup_config() {
   fi
 }
 
+function _install_brew() {
+  if [ ! -x "$(command -v brew)" ]; then
+    echo -e "Installing brew...\n"
+    bash <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)
+  fi
+
+  echo -e "Installing bundles...\n"
+  brew bundle
+}
+
+function _bootstrap() {
+  _setup_config && _link_files && _install_brew
+  unset CWD _link_files _setup_config _install_brew
+}
+
 if [ "$1" == "--quiet" -o "$1" == "-q" ]; then
-  _link_files && _setup_config
+  _bootstrap
 else
   read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
-  echo ""
+  echo -e "\n"
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    _link_files && _setup_config
+    _bootstrap
   fi
 fi
 
-unset _link_files
-unset _setup_config
-unset CWD
+unset _bootstrap
