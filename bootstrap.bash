@@ -77,6 +77,14 @@ function _install_brew() {
 
   echo -e "Installing bundles...\n"
   brew bundle
+
+  echo -e "Configuring...\n"
+
+  # Replace macOS bash
+  sudo echo /usr/local/bin/bash >> /etc/shells
+  chsh -s /usr/local/bin/bash
+  # Create bash-completion@2 completions directory
+  mkdir -p "${BASH_COMPLETION_USER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion}/completions"
 }
 
 function _bootstrap() {

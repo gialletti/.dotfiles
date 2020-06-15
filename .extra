@@ -3,7 +3,7 @@
 # RBENV
 if [ -x "$(command -v rbenv)" ]; then
   # Set root to Brew
-  export RBENV_ROOT=/usr/local/var/rbenv
+  export RBENV_ROOT=$(brew --prefix)/var/rbenv
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi

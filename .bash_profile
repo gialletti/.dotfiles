@@ -19,7 +19,7 @@ done
 unset option
 
 # Enable some optional shell features when possible
-for option in autocd cdspell extglob globstar histappend nocaseglob; do
+for option in autocd cdspell extglob globstar histappend nocaseglob progcomp; do
   shopt -s "$option" 2>/dev/null
 done
 unset option
