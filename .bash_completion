@@ -47,3 +47,25 @@ if [ -x "$(command -v git-number)" ]; then
     __git_complete gco _git_checkout
   fi
 fi
+
+if [ -x "$(command -v php)" ]; then
+  if (php artisan --version > /dev/null); then
+    _artisan() {
+      local arg="${COMP_LINE#php }"
+
+      case "$arg" in
+        artisan*)
+          COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
+          COMMANDS=`php artisan --raw --no-ansi list | sed "s/[[:space:]].*//g"`
+          COMPREPLY=(`compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"`)
+          ;;
+        *)
+          COMPREPLY=( $(compgen -o default -- "${COMP_WORDS[COMP_CWORD]}") )
+          ;;
+      esac
+
+      return 0
+    }
+    complete -F _artisan php
+  fi
+fi

@@ -11,4 +11,7 @@ fi
 # Add PHP binaries to path if installed
 if [[ -d $(brew --prefix php)/bin ]]; then
   export PATH="$PATH:$(brew --prefix php)/bin"
+  if [[ -d $HOME/.composer/vendor/bin ]]; then
+    export PATH="$PATH:$HOME/.composer/vendor/bin"
+  fi
 fi
