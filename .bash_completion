@@ -69,3 +69,8 @@ if [ -x "$(command -v php)" ]; then
     complete -F _artisan php
   fi
 fi
+
+# Add Flutter completion
+if [ -x "$(command -v flutter)" ]; then
+  eval "$(flutter bash-completion)"
+fi

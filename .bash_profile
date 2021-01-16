@@ -7,22 +7,10 @@ done
 unset file
 
 # Load the shell dotfiles, and then some.
-for file in $USER_DOTFILES_DIR/.{aliases,path,bash_prompt,exports,functions,extra,profile,user}; do
+for file in $USER_DOTFILES_DIR/.{aliases,functions,path,bash_prompt,exports,extra,profile}; do
   [ -f "$file" ] && [ -r "$file" ] && source "$file"
 done
 unset file
-
-# Activate shell options
-for option in ignoreeof noclobber; do
-  set -o "$option" 2>/dev/null
-done
-unset option
-
-# Enable some optional shell features when possible
-for option in autocd cdspell extglob globstar histappend nocaseglob progcomp; do
-  shopt -s "$option" 2>/dev/null
-done
-unset option
 
 # Add tab completion for many Bash commands
 if [ -d /usr/local/etc/bash_completion.d ]; then

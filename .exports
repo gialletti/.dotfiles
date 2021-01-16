@@ -10,7 +10,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export NPM_CONFIG_GLOBALCONFIG="$HOME/.global.npmrc"
 
 # Root mkcert certificate
-if [[ -d $(brew --prefix mkcert)/bin ]]; then
+if [ -x "$(command -v mkcert)" ]; then
   export NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem"
 fi
 

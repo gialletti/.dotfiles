@@ -7,11 +7,3 @@ export PATH="$HOME/.bin:$USER_DOTFILES_DIR/bin:$PATH"
 if [[ ":$PATH:" != *"/usr/local/bin"* ]]; then
   export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 fi
-
-# Add PHP binaries to path if installed
-if [[ -d $(brew --prefix php)/bin ]]; then
-  export PATH="$PATH:$(brew --prefix php)/bin"
-  if [[ -d $HOME/.composer/vendor/bin ]]; then
-    export PATH="$PATH:$HOME/.composer/vendor/bin"
-  fi
-fi

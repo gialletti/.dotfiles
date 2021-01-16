@@ -19,24 +19,6 @@ function peep() {
   rm -rf /tmp/peep
 }
 
-# Python vEnv
-function venv() {
-  local proj=$1
-  local env="$(pwd)/bin/activate"
-  command -v virtualenv >/dev/null 2>&1 || {
-    echo "You must first install virtualenv. Run 'pip install virtualenv' to install globally."
-    return
-  }
-  if [ ! -z "$1" ]; then
-    virtualenv $1 >/dev/null 2>&1
-    cd "$1" && source "$env" >/dev/null 2>&1 && echo "New ${proj} enviroment succesfully created and set as working directory."
-  elif [ -e "$env" ]; then
-    source "$env" >/dev/null 2>&1 && echo "Switched to '$(basename $(pwd))' environment!"
-  else
-    echo "No virtual environment set. Verify or create one passing the name as function argument, eg. 'venv anything'"
-  fi
-}
-
 # Simple calculator
 function calc() {
   local result=""
@@ -50,9 +32,9 @@ function calc() {
   printf "\n"
 }
 
-# Folder tree view
+# File tree view
 function tree() {
-  find $@ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+  find ${@:-$(pwd)} -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
 }
 
 # Move to Trash
@@ -167,11 +149,6 @@ function codepoint() {
   if [ -t 1 ]; then
     echo "" # newline
   fi
-}
-
-# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring the `.git` directory, listing directories first.
-function tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
 }
 
 # Search for aliases
