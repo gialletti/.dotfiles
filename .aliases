@@ -14,21 +14,20 @@ alias la="ls -laF ${colorflag}"
 alias ld="ls -lF ${colorflag} | grep --color=never '^d'"
 
 # File management
-alias which='type -all'
-alias filetree='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
-alias path='echo -e ${PATH//:/\\n}'
+alias which="type -all"
+alias path="echo -e ${PATH//:/\\n}"
 alias map="xargs -n1"
 
 # Network
 alias ip_public="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip_local="ipconfig getifaddr en0"
 alias net_info="ipconfig getpacket en0"
-alias open_ports='sudo lsof -i | grep LISTEN'
-alias flush_dns="dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias open_ports="sudo lsof -i | grep LISTEN"
+alias flush_dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 # Utilities
-alias sudo='sudo '
-alias update='sudo softwareupdate -i -a; brew update; brew cleanup;'
+alias sudo="sudo "
+alias update="sudo softwareupdate -i -a; brew update; brew cleanup;"
 alias afk="pmset sleepnow &>/dev/null"
 alias reload="exec $SHELL -l"
 
