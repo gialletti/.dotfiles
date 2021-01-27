@@ -31,3 +31,8 @@ if [ "$(command -v pyenv)" ]; then
   export PATH="$HOME/.jenv/bin:$PATH"
   eval "$(pyenv init -)"
 fi
+
+# Delta
+if [ "$(command -v delta)" ]; then
+  export DELTA_PAGER="less -R"
+fi

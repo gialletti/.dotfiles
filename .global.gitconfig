@@ -1,172 +1,153 @@
 [alias]
-# View abbreviated SHA, description, and history graph of the latest 20 commits
-l = log --pretty=oneline -n 20 --graph --abbrev-commit
+  # List aliases
+  aliases = config --get-regexp ^alias\\.
+  # Amend the currently staged files to the latest commit
+  amend = commit --amend --reuse-message=HEAD
+  # List branches
+  branches = branch -a
+  # Credit a co-author on the latest commit
+  coauthor = !"f() { git commit --amend -m $(git log --format=%B -n1) -m \"Co-authored-by: $1 <$2>\"; }; f"
+  # List repo contributors
+  contributors = shortlog --summary --numbered
+  # Credit an author on the latest commit
+  credit = !"f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+  # Switch to a branch, creating it if necessary
+  go = !"f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+  # Ignore upstream files to avoid unnecessary and expensive checks
+  ignore = update-index --assume-unchanged
+  # List currently ignored files
+  ignored = !git ls-files -v | grep ^[a-z]
+  # Remove branches that have already been merged with master
+  purge = !"f() { git fetch --prune; git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; }; f"
+  # List remotes
+  remotes = remote -v
+  # Completely remove submodule
+  rm-module = !"f() { if git submodule status \"$1\" >/dev/null 2>&1; then git submodule deinit -f \"$1\" && rmdir \"$1\" && rm -rf .git/modules/\"$1\" && git config --file=.gitmodules --remove-section submodule.\"$1\" && git add .gitmodules && git rm --cached -rf \"$1\"; else echo \"Submodule '$1' not found.\"; fi }; f"
+  # Instruct Git to not change files and persist local changes
+  skip = update-index --skip-worktree
+  # List skipped files
+  skipped = !git ls-files -v | grep --color "^S"
+  # List tags
+  tags = tag -l
+  # Unignore files
+  unignore = update-index --no-assume-unchanged
+  # Reset files flags and track changes
+  unskip = update-index --no-skip-worktree
+  # List remote URLs
+  urls = config --get-regexp ^url\\.
 
-# View the current working tree status using the short format
-s = status -s
-# View abbreviated SHA, description, and history graph of the latest 20 commits
-l = log --pretty=oneline -n 20 --graph --abbrev-commit
-plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+  # View the current working tree status using the short format
+  s = status -s
+  # View abbreviated SHA, description, and history graph of the latest 20 commits
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+  plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+  # Pull in remote changes for the current repository and all its submodules
+  p = !"git pull; git submodule foreach git pull origin master"
+  # Update all submodules for current repository
+  su = submodule update --recursive --init
+  # Clone a repository including all submodules
+  c = clone --recursive
+  # Commit all changes
+  ca = !git add -A && git commit -av
+  # Display list of files in history by size
+  du = !"git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 | cut -c 1-12,41- | if [[ -x $(command -v numfmt) ]]; then numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest; else cat; fi"
+  # Interactive rebase with the given number of latest commits
+  reb = !"r() { git rebase -i HEAD~$1; }; r"
+  # Find branches containing commit
+  fb = !"f() { git branch -a --contains $1; }; f"
+  # Find tags containing commit
+  ft = !"f() { git describe --always --contains $1; }; f"
+  # Find commits by source code
+  fc = !"f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+  # Find commits by commit message
+  fm = !"f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-# Show the diff between the latest commit and the current state
-d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
-# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-# Pull in remote changes for the current repository and all its submodules
-p = !"git pull; git submodule foreach git pull origin master"
-
-# Update all submodules for current repository
-su = submodule update --recursive --init
-
-# Clone a repository including all submodules
-c = clone --recursive
-
-# Commit all changes
-ca = !git add -A && git commit -av
-
-# Switch to a branch, creating it if necessary
-go = !"f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
-# Display list of files in history by size
-du = !"git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' \
-  | sort --numeric-sort --key=2 | cut -c 1-12,41- | if [[ -x $(command -v numfmt) ]]; then numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest; else cat; fi"
-
-# Show verbose output about tags, branches or remotes
-tags = tag -l
-branches = branch -a
-remotes = remote -v
-
-# Amend the currently staged files to the latest commit
-amend = commit --amend --reuse-message=HEAD
-
-# Credit an author on the latest commit
-credit = !"f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
-# Credit an author on the latest commit
-coauthor = !"f() { git commit --amend -m $(git log --format=%B -n1) -m \"Co-authored-by: $1 <$2>\"; }; f"
-
-# Interactive rebase with the given number of latest commits
-reb = !"r() { git rebase -i HEAD~$1; }; r"
-
-# Find branches containing commit
-fb = !"f() { git branch -a --contains $1; }; f"
-
-# Find tags containing commit
-ft = !"f() { git describe --always --contains $1; }; f"
-
-# Find commits by source code
-fc = !"f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-
-# Find commits by commit message
-fm = !"f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-
-# Remove branches that have already been merged with master
-dm = !"git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-
-# Completely remove submodule
-rmsb = !"f() { if git submodule status \"$1\" >/dev/null 2>&1; then git submodule deinit -f \"$1\" && rmdir \"$1\" && rm -rf .git/modules/\"$1\" && \
-		git config --file=.gitmodules --remove-section submodule.\"$1\" && git add .gitmodules && git rm --cached -rf \"$1\"; else echo \"Submodule '$1' not found.\"; fi }; f"
-
-# List contributors with number of commits
-contributors = shortlog --summary --numbered
-
-alias = config --get-regexp ^alias\\.
-urls = config --get-regexp ^url\\.
-
-# Ignore files
-ignore = update-index --assume-unchanged
-unignore = update-index --no-assume-unchanged
-ignored = !git ls-files -v | grep ^[a-z]
-
-# Skip files
-skip = update-index --skip-worktree
-unskip = update-index --no-skip-worktree
-skipped = !git ls-files -v | grep --color "^S"
 [apply]
-# Detect whitespace errors when applying a patch
-whitespace = fix
-
-[core]
-# Treat spaces before tabs and all kinds of trailing whitespace as an error
-# [default] trailing-space: looks for spaces at the end of a line
-# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
-
-# Make `git rebase` safer on OS X
-# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-trustctime = false
-autocrlf = input
-
-[color]
-# Use colors in Git commands that are capable of colored output when
-# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-ui = auto
-interactive = auto
-
-[color "branch"]
-current = yellow reverse
-local = yellow
-remote = green
-
-[color "diff"]
-meta = yellow bold
-frag = magenta bold # line info
-old = red           # deletions
-new = green         # additions
-
-[color "status"]
-added = yellow
-changed = green
-untracked = cyan
-
-[diff]
-# Detect copies as well as renames
-renames = copies
-
-[help]
-# Automatically correct and execute mistyped commands
-autocorrect = 1
-
-[merge]
-# Include summaries of merged commits in newly created merge commit messages
-log = true
-
-[push]
-default = current
-followTags = true
-
-# URL shorthands
-
-[url "git@github.com:"]
-insteadOf = "gh:"
-pushInsteadOf = "github:"
-pushInsteadOf = "git://github.com/"
-
-[url "git://github.com/"]
-insteadOf = "github:"
-
-[url "git@gist.github.com:"]
-insteadOf = "gst:"
-pushInsteadOf = "gist:"
-pushInsteadOf = "git://gist.github.com/"
-
-[url "git://gist.github.com/"]
-insteadOf = "gist:"
-
-[filter "lfs"]
-clean = git-lfs clean -- %f
-smudge = git-lfs smudge -- %f
-required = true
-process = git-lfs filter-process
-
-[gpg]
-program = gpg
+  whitespace = fix
 
 [branch]
-autoSetupMerge = always
-autoSetupRebase = always
+  autoSetupMerge = always
+  autoSetupRebase = always
+
+[core]
+  whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
+  trustctime = false
+  autocrlf = input
+  pager = delta
+
+[color]
+  ui = auto
+  interactive = auto
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  commit = green
+  meta = yellow
+  frag = cyan
+  old = red
+  new = green
+  whitespace = red reverse
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[delta]
+  inspect-raw-lines = false
+  diff-highlight = true
+  side-by-side = true
+  whitespace-error-style = 22 reverse
+  syntax-theme = Nord
+  plus-empty-line-marker-style = reverse "#2E4A3E"
+  minus-empty-line-marker-style = reverse "#553440"
+  line-numbers-plus-style = bold "#2E4A3E"
+  line-numbers-minus-style = bold "#553440"
+  line-numbers-right-style = black
+  line-numbers-left-style = black
+  line-numbers-left-format = {nm:^3}│
+  line-numbers-right-format = {np:^3}│
+
+[diff]
+  renames = copies
+  colorMoved = default
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  required = true
+  process = git-lfs filter-process
+
+[gpg]
+  program = gpg
+
+[help]
+  autocorrect = 1
+
+[interactive]
+  diffFilter = delta --color-only
+
+[merge]
+  log = true
 
 [pull]
-default = current
+  default = current
+  ff = only
+
+[push]
+  default = current
+  followTags = true
