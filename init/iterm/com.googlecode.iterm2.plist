@@ -10,6 +10,8 @@
 	<true/>
 	<key>AllowClipboardAccess</key>
 	<false/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AnimateDimming</key>
 	<false/>
 	<key>AutoHideTmuxClientSession</key>
@@ -605,6 +607,8 @@
 	<true/>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
+	<key>DoubleReportScrollWheel</key>
+	<false/>
 	<key>EnableDivisionView</key>
 	<true/>
 	<key>EnableRendezvous</key>
@@ -1100,6 +1104,8 @@
 			<real>0.12685423259493672</real>
 			<key>Mouse Reporting</key>
 			<true/>
+			<key>Mouse Reporting allow mouse wheel</key>
+			<true/>
 			<key>Name</key>
 			<string>Lean</string>
 			<key>Non Ascii Font</key>
@@ -1115,7 +1121,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -1400,7 +1406,7 @@
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
-	<false/>
+	<true/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>PMPrintingExpandedStateForPrint2</key>
@@ -1455,6 +1461,8 @@
 	<key>RightOption</key>
 	<integer>3</integer>
 	<key>SavePasteHistory</key>
+	<false/>
+	<key>SensitiveScrollWheel</key>
 	<false/>
 	<key>SeparateStatusBarsPerPane</key>
 	<true/>

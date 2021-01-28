@@ -14,6 +14,7 @@ brew "git"
 brew "gnupg"
 brew "jenv"
 brew "jq"
+brew "less", link: true
 brew "mas"
 brew "node"
 brew "nvm"
