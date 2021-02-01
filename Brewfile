@@ -63,6 +63,7 @@ cask "quicklook-json"
 
 # mac app store apps
 mas "Amphetamine", id: 937984704
+mas "Dato", id: 1470584107
 mas "Sip", id: 507257563
 mas "Unclutter", id: 577085396
 mas "Xcode", id: 497799835

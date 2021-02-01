@@ -1041,6 +1041,10 @@
       "Sip": {
         "id": "507257563",
         "version": "4.5.2"
+      },
+      "Dato": {
+        "id": "1470584107",
+        "version": "2.2.0"
       }
     }
   },
@@ -1050,7 +1054,7 @@
         "HOMEBREW_VERSION": "2.7.5-10-g8869208",
         "HOMEBREW_PREFIX": "/usr/local",
         "Homebrew/homebrew-core": "078e96b8d93280d6a7a686ac080e0dbc24e78db5",
-        "CLT": "12.3.0.0.1.1607026830",
+        "CLT": "12.4.0.0.1.1610135815",
         "Xcode": "12.3",
         "macOS": "11.1"
       }
