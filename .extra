@@ -9,7 +9,7 @@ if [ "$(command -v rbenv)" ]; then
 fi
 
 # NVM
-if ([ "$(command -v nvm)" ] && [ -x "$(command -v brew)" ]); then
+if ([ -x "$(command -v brew)" ] && [ -s $(brew --prefix)/opt/nvm/nvm.sh ]); then
   NVM_BASE=$(brew --prefix)/opt/nvm
   export NVM_DIR="$HOME/.nvm"
   [ -d $NVM_DIR ] || mkdir -p $NVM_DIR
