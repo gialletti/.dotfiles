@@ -23,9 +23,11 @@ function _link_files() {
 
   # Find and create links in home to user files
   find -E $PWD \
+    \( \
     -iregex '.*\/\.(bash.*|editorconfig|hushlogin|[^.\/]+rc$)' \
     -or -path '*/.gnupg/*' -or -path '*/.ssh/*' -or -path '*/.vim' \
-    -exec ln -sfn "{}" $HOME ";"
+    \) \
+    -exec ln -sfn {} $HOME \;
 }
 
 function _setup_config() {
@@ -81,7 +83,7 @@ function _install_brew() {
   echo -e "Configuring...\n"
 
   # Replace macOS bash
-  sudo echo /usr/local/bin/bash >> /etc/shells
+  sudo echo /usr/local/bin/bash >>/etc/shells
   chsh -s /usr/local/bin/bash
   # Create bash-completion@2 completions directory
   mkdir -p "${BASH_COMPLETION_USER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion}/completions"
