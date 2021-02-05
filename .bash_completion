@@ -44,7 +44,8 @@ if [ -x "$(command -v git-number)" ]; then
     __git_complete gd _git_diff
     __git_complete gr _git_reset
     __git_complete gl _git_log
-    __git_complete gco _git_checkout
+    # Will autocomplete local branches only, use `git checkout` to list also remotes
+    __git_complete gco __git_complete_refs $track_opt
   fi
 fi
 

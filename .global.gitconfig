@@ -23,6 +23,8 @@
   purge-remote = !"f() { git fetch --prune; git branch --format '%(refname:short)' -r --merged master | sed 's/origin\\///' | grep -v '^\\(HEAD\\|master\\|develop\\)$' | xargs -n 1 git push origin --delete; }; f"
   # List remotes
   remotes = remote -v
+  # Revert a specific pull request
+  revert-parent = revert -m 1
   # Completely remove submodule
   rm-module = !"f() { if git submodule status \"$1\" >/dev/null 2>&1; then git submodule deinit -f \"$1\" && rmdir \"$1\" && rm -rf .git/modules/\"$1\" && git config --file=.gitmodules --remove-section submodule.\"$1\" && git add .gitmodules && git rm --cached -rf \"$1\"; else echo \"Submodule '$1' not found.\"; fi }; f"
   # Instruct Git to not change files and persist local changes
