@@ -30,11 +30,11 @@ if [ -x "$(command -v git-number)" ]; then
   # Set aliases
   alias gs="git-number"
   alias ga="gs add"
-  alias gc="gs -c git commit"
-  alias gd="gs -c git diff --ignore-space-at-eol --ignore-all-space --ignore-space-change --ignore-blank-lines"
-  alias gr="gs -c git reset"
-  alias gl="gs -c git log -w -b -p --ignore-blank-lines"
-  alias gco="gs -c git checkout"
+  alias gc="gs commit"
+  alias gd="gs diff --ignore-space-at-eol --ignore-all-space --ignore-space-change --ignore-blank-lines"
+  alias gr="gs reset"
+  alias gl="gs log -w -b -p --ignore-blank-lines"
+  alias gco="gs checkout"
 
   # Completion for aliases
   if type _git &>/dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
