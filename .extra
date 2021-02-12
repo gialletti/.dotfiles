@@ -10,6 +10,7 @@ fi
 
 # NVM
 if ([ -x "$(command -v brew)" ] && [ -s $(brew --prefix)/opt/nvm/nvm.sh ]); then
+  export NVM_SYMLINK_CURRENT=true
   NVM_BASE=$(brew --prefix)/opt/nvm
   export NVM_DIR="$HOME/.nvm"
   [ -d $NVM_DIR ] || mkdir -p $NVM_DIR
