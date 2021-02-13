@@ -1,12 +1,14 @@
 # ignore all folders except specific ones
 */
-!.gnupg
-!.ssh
-!.vim/
 !bin/
 !git/
 !init/
+!.gnupg/
+!.ssh/
 
-# ignore user specific configurations
-.npmrc
-.user
+.gnupg/*
+!.gnupg/gpg-agent.conf
+!.gnupg/gpg.conf
+
+.ssh/*
+!.ssh/config

@@ -1032,7 +1032,7 @@
       },
       "Xcode": {
         "id": "497799835",
-        "version": "12.3"
+        "version": "12.4"
       },
       "Unclutter": {
         "id": "577085396",
@@ -1055,7 +1055,7 @@
         "HOMEBREW_PREFIX": "/usr/local",
         "Homebrew/homebrew-core": "078e96b8d93280d6a7a686ac080e0dbc24e78db5",
         "CLT": "12.4.0.0.1.1610135815",
-        "Xcode": "12.3",
+        "Xcode": "12.4",
         "macOS": "11.1"
       }
     }

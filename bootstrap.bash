@@ -6,26 +6,20 @@ CWD="$(pwd -P)"
 
 # Update
 echo -e "Updating files to latest version available...\n"
-
-{
-  git submodule update --init --recursive
-  git pull origin HEAD --autostash --rebase --recurse-submodules
-} &>/dev/null
+git pull origin HEAD --autostash --rebase --recurse-submodules &>/dev/null
 
 # Link configuration files to $HOME
 function _link_files() {
-  echo -e "Creating config dirs in HOME and linking files...\n"
-
-  # Create needed directories if necessary
-  mkdir -p $HOME/{.gnupg,.ssh}
+  echo -e "Linking configuration files to HOME...\n"
 
   # Find and create links in home to user files
-  find -E $PWD \
-    \( \
-    -iregex '.*\/\.(bash.*|editorconfig|hushlogin|[^.\/]+rc$)' \
-    -or -path '*/.gnupg/*' -or -path '*/.ssh/*' -or -path '*/.vim' \
-    \) \
-    -exec ln -sfn {} $HOME \;
+  find -E $CWD \( \
+    -iregex "$CWD\/\.bash.*$" -or \
+    -iregex "$CWD\/\.[^.\/]+rc$" -or \
+    -iregex "$CWD\/\.(editorconfig|hushlogin)$" -or \
+    -path "$CWD/.gnupg" -or \
+    -path "$CWD/.ssh" \
+    \) -exec sh -c 'ln -sfn {} $HOME &>/dev/null || (mv $HOME/$(basename {}) $HOME/$(basename {})_duped && ln -sfn {} $HOME)' \;
 }
 
 function _setup_config() {
@@ -38,35 +32,27 @@ function _setup_config() {
     echo "
     #!/usr/bin/env bash
 
-    # Set your configuration files path
+    # Export configuration files path
     export USER_DOTFILES_DIR=$CWD
 
-    # User configuration
+    # Export user info
+    export USER_AUTHOR_NAME=\"\"
+    export USER_AUTHOR_EMAIL=\"\"
 
-    # Git configuration
-    GIT_AUTHOR_NAME=\"\"
-    GIT_COMMITTER_NAME=\"\$GIT_AUTHOR_NAME\"
-    git config --global user.name \"\$GIT_AUTHOR_NAME\"
-
-    GIT_AUTHOR_EMAIL=\"\"
-    GIT_COMMITTER_EMAIL=\"\$GIT_AUTHOR_EMAIL\"
-    git config --global user.email \"\$GIT_AUTHOR_EMAIL\"
-
+    # Set git configuration from environment variables
+    GIT_COMMITTER_NAME=\"\$USER_AUTHOR_NAME\"
+    GIT_COMMITTER_EMAIL=\"\$USER_AUTHOR_EMAIL\"
     GIT_SIGN_KEYID=\"\"
+    git config --global user.name \"\$GIT_COMMITTER_NAME\"
+    git config --global user.email \"\$GIT_COMMITTER_EMAIL\"
     git config --global commit.gpgsign true
     git config --global user.signingkey \"\$GIT_SIGN_KEYID\"
-    " >|$HOME/.user
+    " | awk '{$1=$1}!/^$/' >|$HOME/.user
   fi
 
+  # Create user defined git config if doesn't exist
   if [ ! -f $HOME/.gitconfig ]; then
-    echo "
-    [include]
-    path = $CWD/.global.gitconfig
-    " >|$HOME/.gitconfig
-  fi
-
-  if [ ! -f $HOME/.npmrc ]; then
-    echo "" >|$HOME/.npmrc
+    echo "" >|$HOME/.gitconfig
   fi
 }
 
@@ -93,14 +79,10 @@ function _bootstrap() {
   unset CWD _link_files _setup_config _install_brew
 }
 
-if [ "$1" == "--quiet" -o "$1" == "-q" ]; then
-  _bootstrap
-else
+if [ "$1" == "--quiet" -o "$1" == "-q" ]; then _bootstrap; else
   read -p "This may overwrite existing files in your home directory. Are you sure? (Y/n) " -n 1
   echo -e "\n"
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    _bootstrap
-  fi
+  if [[ $REPLY =~ ^[Yy]$ ]]; then _bootstrap; fi
 fi
 
 unset _bootstrap
