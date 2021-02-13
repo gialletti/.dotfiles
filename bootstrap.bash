@@ -8,10 +8,8 @@ CWD="$(pwd -P)"
 echo -e "Updating files to latest version available...\n"
 
 {
-  git submodule update --init --recursive &&
-    git stash --include-untracked &&
-    git pull origin HEAD --recurse-submodules &&
-    git stash pop
+  git submodule update --init --recursive
+  git pull origin HEAD --autostash --rebase --recurse-submodules
 } &>/dev/null
 
 # Link configuration files to $HOME
@@ -33,6 +31,7 @@ function _link_files() {
 function _setup_config() {
   echo -e "Creating user configuration files at HOME...\n"
 
+  export USER_DOTFILES_DIR=$CWD
   source ~/.bash_profile
 
   if [ ! -f $HOME/.user ]; then
