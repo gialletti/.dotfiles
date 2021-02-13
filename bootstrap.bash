@@ -2,7 +2,6 @@
 
 # Change working directory to script's dirname
 cd "$(dirname "${BASH_SOURCE}")"
-CWD="$(pwd -P)"
 
 # Update
 echo -e "Updating files to latest version available...\n"
@@ -12,28 +11,31 @@ git pull origin HEAD --autostash --rebase --recurse-submodules &>/dev/null
 function _link_files() {
   echo -e "Linking configuration files to HOME...\n"
 
+  # Create needed directories if necessary
+  mkdir -p $HOME/{.gnupg,.ssh}
+
   # Find and create links in home to user files
-  find -E $CWD \( \
-    -iregex "$CWD\/\.bash.*$" -or \
-    -iregex "$CWD\/\.[^.\/]+rc$" -or \
-    -iregex "$CWD\/\.(editorconfig|hushlogin)$" -or \
-    -path "$CWD/.gnupg" -or \
-    -path "$CWD/.ssh" \
-    \) -exec sh -c 'ln -sfn {} $HOME &>/dev/null || (mv $HOME/$(basename {}) $HOME/$(basename {})_duped && ln -sfn {} $HOME)' \;
+  find -E .[^.]* * \( \
+    -iregex "\.bash.*$" -or \
+    -iregex "\.[^.\/]+rc$" -or \
+    -iregex "\.(editorconfig|hushlogin)$" -or \
+    -iregex "\.gnupg/(gpg.conf|gpg-agent.conf)$" -or \
+    -iregex ".\ssh/(config)" -or \
+    -path "bin" \
+    \) -exec sh -c 'ln -sfn $PWD/{} $HOME$([ ! -d $PWD/{} ] && echo /{}) &>/dev/null || (mv $HOME/{} $HOME/{}_duped && ln -sfn $PWD/{} $HOME)' \;
 }
 
 function _setup_config() {
   echo -e "Creating user configuration files at HOME...\n"
 
-  export USER_DOTFILES_DIR=$CWD
-  source ~/.bash_profile
+  export USER_DOTFILES_DIR=$PWD
 
   if [ ! -f $HOME/.user ]; then
     echo "
     #!/usr/bin/env bash
 
     # Export configuration files path
-    export USER_DOTFILES_DIR=$CWD
+    export USER_DOTFILES_DIR=$PWD
 
     # Export user info
     export USER_AUTHOR_NAME=\"\"
@@ -76,7 +78,7 @@ function _install_brew() {
 
 function _bootstrap() {
   _setup_config && _link_files && _install_brew
-  unset CWD _link_files _setup_config _install_brew
+  unset _link_files _setup_config _install_brew
 }
 
 if [ "$1" == "--quiet" -o "$1" == "-q" ]; then _bootstrap; else
