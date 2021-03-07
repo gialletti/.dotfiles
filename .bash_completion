@@ -25,7 +25,7 @@ _ssh_hosts() {
 }
 complete -o "default" -o "nospace" -F _ssh_hosts scp sftp ssh
 
-# Add Git-Number alias and completion
+# Add Git-Number aliases and completion
 if [ -x "$(command -v git-number)" ]; then
   # Set aliases
   alias gs="git-number"
@@ -37,7 +37,7 @@ if [ -x "$(command -v git-number)" ]; then
   alias gco="gs checkout"
 
   # Completion for aliases
-  if type _git &>/dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
     __git_complete gs _git
     __git_complete ga _git_add
     __git_complete gc _git_commit
@@ -45,24 +45,32 @@ if [ -x "$(command -v git-number)" ]; then
     __git_complete gr _git_reset
     __git_complete gl _git_log
     # Will autocomplete local branches only, use `git checkout` to list also remotes
-    __git_complete gco __git_complete_refs $track_opt
+    _git_checkout_heads() {
+      case "$cur" in
+      "") __git_complete_refs --mode="heads" ;;
+      *) _git_checkout ;;
+      esac
+    }
+    __git_complete gco _git_checkout_heads
   fi
 fi
 
+# Add PHP completions
 if [ -x "$(command -v php)" ]; then
-  if (php artisan --version > /dev/null); then
+  # Artisan commands completion
+  if (php artisan --version >/dev/null); then
     _artisan() {
       local arg="${COMP_LINE#php }"
 
       case "$arg" in
-        artisan*)
-          COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
-          COMMANDS=`php artisan --raw --no-ansi list | sed "s/[[:space:]].*//g"`
-          COMPREPLY=(`compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"`)
-          ;;
-        *)
-          COMPREPLY=( $(compgen -o default -- "${COMP_WORDS[COMP_CWORD]}") )
-          ;;
+      artisan*)
+        COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
+        COMMANDS=$(php artisan --raw --no-ansi list | sed "s/[[:space:]].*//g")
+        COMPREPLY=($(compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"))
+        ;;
+      *)
+        COMPREPLY=($(compgen -o default -- "${COMP_WORDS[COMP_CWORD]}"))
+        ;;
       esac
 
       return 0
