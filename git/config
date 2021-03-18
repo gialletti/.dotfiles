@@ -20,7 +20,7 @@
   # Remove local branches that have already been merged with current
   purge = !"f() { git fetch --prune; git branch --format '%(if)%(HEAD)%(then)*%(else)%(refname:short)%(end)' --merged | grep -v '^\\(\\*\\|master\\|develop\\)$' | xargs -n 1 git branch -d; }; f"
   # Remove remote branches that have already been merged to master
-  purge-remote = !"f() { git fetch --prune; git branch --format '%(refname:short)' -r --merged master | sed 's/origin\\///' | grep -v '^\\(HEAD\\|master\\|develop\\)$' | xargs -n 1 git push origin --delete; }; f"
+  purge-remote = !"f() { git fetch --prune; git branch --format '%(refname:short)' -r --merged \"${1:-master}\" | sed 's/origin\\///' | grep -v '^\\(HEAD\\|master\\|develop\\)$' | xargs -n 1 git push origin --delete --no-verify; }; f"
   # List remotes
   remotes = remote -v
   # Revert a specific pull request
